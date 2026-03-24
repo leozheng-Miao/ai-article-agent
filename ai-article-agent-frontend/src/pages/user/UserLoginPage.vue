@@ -272,19 +272,17 @@ const handleResetSubmit = async (values: typeof resetFormState) => {
 .auth-shell {
   min-height: calc(100vh - 120px);
   padding: 40px 20px 56px;
-  background: linear-gradient(165deg, #e8f0fe 0%, #f4f6fb 42%, #f7f8fa 100%);
+  background: var(--gradient-surface);
 }
 
 .auth-panel {
   max-width: 440px;
   margin: 0 auto;
   padding: 40px 40px 36px;
-  background: #fff;
+  background: var(--color-bg-card);
   border-radius: 16px;
-  box-shadow:
-    0 4px 6px -1px rgba(15, 23, 42, 0.06),
-    0 12px 40px -12px rgba(22, 119, 255, 0.15);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 32px var(--color-shadow);
+  border: 1px solid var(--color-border);
 }
 
 .title {
@@ -292,7 +290,7 @@ const handleResetSubmit = async (values: typeof resetFormState) => {
   margin: 0 0 8px;
   font-size: 24px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.88);
+  color: var(--color-text-primary);
   letter-spacing: 0.03em;
 }
 
@@ -300,7 +298,7 @@ const handleResetSubmit = async (values: typeof resetFormState) => {
   text-align: center;
   margin: 0 0 28px;
   font-size: 14px;
-  color: #8c8c8c;
+  color: var(--color-text-secondary);
   line-height: 1.5;
 }
 
@@ -309,7 +307,7 @@ const handleResetSubmit = async (values: typeof resetFormState) => {
 }
 
 .auth-tabs.login-tabs :deep(.ant-tabs-nav::before) {
-  border-color: rgba(0, 0, 0, 0.06);
+  border-color: var(--color-border-weak);
 }
 
 .auth-tabs.login-tabs :deep(.ant-tabs-nav-list) {
@@ -352,19 +350,19 @@ const handleResetSubmit = async (values: typeof resetFormState) => {
 
 .tips {
   text-align: right;
-  color: #8c8c8c;
+  color: var(--color-text-tertiary);
   font-size: 13px;
   margin-bottom: 16px;
 }
 
 .tips :deep(a) {
-  color: #1677ff;
+  color: var(--color-primary);
   font-weight: 500;
   margin-left: 6px;
 }
 
 .tips :deep(a:hover) {
-  color: #4096ff;
+  color: var(--color-primary-hover);
 }
 
 .forgot-row {
@@ -373,13 +371,13 @@ const handleResetSubmit = async (values: typeof resetFormState) => {
 }
 
 .forgot-link {
-  color: #1677ff;
+  color: var(--color-primary);
   font-size: 13px;
   cursor: pointer;
 }
 
 .forgot-link:hover {
-  color: #4096ff;
+  color: var(--color-primary-hover);
 }
 
 .code-with-btn {

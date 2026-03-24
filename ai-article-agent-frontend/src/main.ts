@@ -10,6 +10,10 @@ import 'ant-design-vue/dist/reset.css'
 import 'dayjs/locale/zh-cn'
 
 import '@/access'
+import { useTheme } from '@/composables/useTheme'
+
+const { initTheme } = useTheme()
+initTheme()
 
 const app = createApp(App)
 

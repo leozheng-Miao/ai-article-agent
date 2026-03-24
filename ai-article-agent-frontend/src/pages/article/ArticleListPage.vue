@@ -11,14 +11,32 @@
         </a-button>
       </div>
 
-      <a-card :bordered="false">
+      <a-card v-if="loading" :bordered="false">
+        <div class="table-skeleton">
+          <div class="table-skeleton-header">
+            <a-skeleton-button active block />
+            <a-skeleton-button active block />
+            <a-skeleton-button active block />
+            <a-skeleton-button active block />
+            <a-skeleton-button active block />
+          </div>
+          <div v-for="index in 6" :key="index" class="table-skeleton-row">
+            <a-skeleton-input active block />
+            <a-skeleton-input active block />
+            <a-skeleton-button active block />
+            <a-skeleton-input active block />
+            <a-skeleton-button active block />
+          </div>
+        </div>
+      </a-card>
+
+      <a-card v-else :bordered="false">
         <a-table
-            :columns="columns"
-            :data-source="dataSource"
-            :loading="loading"
-            :pagination="pagination"
-            @change="handleTableChange"
-            row-key="id"
+          :columns="columns"
+          :data-source="dataSource"
+          :pagination="pagination"
+          @change="handleTableChange"
+          row-key="id"
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'title'">
@@ -44,10 +62,10 @@
                   查看
                 </a-button>
                 <a-popconfirm
-                    title="确定要删除这篇文章吗?"
-                    ok-text="确定"
-                    cancel-text="取消"
-                    @confirm="deleteArticle(record)"
+                  title="确定要删除这篇文章吗?"
+                  ok-text="确定"
+                  cancel-text="取消"
+                  @confirm="deleteArticle(record)"
                 >
                   <a-button type="link" size="small" danger>删除</a-button>
                 </a-popconfirm>
@@ -188,7 +206,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .article-list-page {
   padding: 24px;
-  background: #f0f2f5;
+  background: var(--color-bg-page);
   min-height: 100vh;
 
   .container {
@@ -206,6 +224,7 @@ onMounted(() => {
       font-size: 24px;
       font-weight: 600;
       margin: 0;
+      color: var(--color-text-primary);
     }
   }
 
@@ -214,13 +233,26 @@ onMounted(() => {
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 4px;
-      color: #1a1a1a;
+      color: var(--color-text-primary);
     }
 
     .sub-title {
       font-size: 12px;
-      color: #999;
+      color: var(--color-text-tertiary);
     }
+  }
+
+  .table-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .table-skeleton-header,
+  .table-skeleton-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr 0.8fr 1fr 0.9fr;
+    gap: 12px;
   }
 }
 </style>

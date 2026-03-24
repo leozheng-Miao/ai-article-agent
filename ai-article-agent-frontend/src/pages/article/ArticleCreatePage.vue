@@ -142,7 +142,7 @@ import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { RocketOutlined } from '@ant-design/icons-vue'
 import { createArticle, type ArticleVO, type OutlineItem, type ImageItem } from '@/api/articleController'
-import { connectSSE, closeSSE, type SSEMessage } from '@/utils/sse'
+import { connectSSE, type SSEMessage } from '@/utils/sse'
 import { marked } from 'marked'
 
 const router = useRouter()
@@ -166,7 +166,7 @@ const article = ref<Partial<ArticleVO>>({
   images: [],
 })
 
-let eventSource: EventSource | null = null
+let sseConnection: { eventSource: EventSource; cancel: () => void } | null = null
 
 // Markdown 转 HTML
 const markdownToHtml = (markdown: string) => {
@@ -189,10 +189,14 @@ const startCreate = async () => {
     taskId.value = res.data.data
 
     // 建立 SSE 连接
-    eventSource = connectSSE(taskId.value, {
+    // 若用户快速重复触发创建，先取消旧连接
+    sseConnection?.cancel()
+    sseConnection = connectSSE(taskId.value, {
       onMessage: handleSSEMessage,
       onError: handleSSEError,
       onComplete: handleSSEComplete,
+      maxRetries: 3,
+      retryDelay: 3000,
     })
   } catch (error: any) {
     message.error(error.message || '创建任务失败')
@@ -274,6 +278,8 @@ const viewArticle = () => {
 
 // 重新创作
 const resetCreate = () => {
+  sseConnection?.cancel()
+  sseConnection = null
   topic.value = ''
   isCreating.value = false
   isCompleted.value = false
@@ -289,14 +295,14 @@ const resetCreate = () => {
 
 // 组件卸载前关闭 SSE
 onBeforeUnmount(() => {
-  closeSSE(eventSource)
+  sseConnection?.cancel()
 })
 </script>
 
 <style scoped lang="scss">
 .article-create-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-brand);
   padding: 40px 20px;
 
   .container {
@@ -307,13 +313,13 @@ onBeforeUnmount(() => {
   .header {
     text-align: center;
     margin-bottom: 40px;
-    color: white;
+    color: var(--color-on-primary);
 
     .title {
       font-size: 48px;
       font-weight: 700;
       margin: 0 0 16px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      text-shadow: 2px 2px 4px var(--color-shadow);
     }
 
     .subtitle {
@@ -326,7 +332,7 @@ onBeforeUnmount(() => {
   .input-card,
   .progress-card {
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px var(--color-shadow);
 
     :deep(.ant-card-body) {
       padding: 40px;
@@ -343,12 +349,12 @@ onBeforeUnmount(() => {
     font-size: 18px;
     font-weight: 600;
     border-radius: 8px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     border: none;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 8px 16px var(--color-shadow);
     }
   }
 
@@ -364,25 +370,25 @@ onBeforeUnmount(() => {
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 16px;
-        color: #1890ff;
+        color: var(--color-primary);
       }
     }
 
     .title-box {
       padding: 24px;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: var(--gradient-surface);
       border-radius: 12px;
 
       h3 {
         font-size: 28px;
         font-weight: 700;
         margin: 0 0 12px;
-        color: #1a1a1a;
+        color: var(--color-text-primary);
       }
 
       .subtitle-text {
         font-size: 16px;
-        color: #666;
+        color: var(--color-text-secondary);
         margin: 0;
       }
     }
@@ -391,7 +397,7 @@ onBeforeUnmount(() => {
       .outline-item {
         margin-bottom: 16px;
         padding: 16px;
-        background: #f5f5f5;
+        background: var(--color-bg-muted);
         border-radius: 8px;
 
         .outline-title {
@@ -406,7 +412,7 @@ onBeforeUnmount(() => {
 
           li {
             margin-bottom: 4px;
-            color: #666;
+            color: var(--color-text-secondary);
           }
         }
       }
@@ -414,8 +420,8 @@ onBeforeUnmount(() => {
 
     .content-box {
       padding: 24px;
-      background: #fff;
-      border: 1px solid #e8e8e8;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
       border-radius: 8px;
       position: relative;
 
@@ -428,7 +434,7 @@ onBeforeUnmount(() => {
           font-weight: 600;
           margin: 24px 0 16px;
           padding-bottom: 8px;
-          border-bottom: 2px solid #eee;
+          border-bottom: 2px solid var(--color-border);
         }
 
         :deep(p) {
@@ -451,7 +457,7 @@ onBeforeUnmount(() => {
       .image-item {
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px var(--color-shadow);
         transition: transform 0.3s;
 
         &:hover {
@@ -466,22 +472,22 @@ onBeforeUnmount(() => {
 
         .image-info {
           padding: 12px;
-          background: #fff;
+          background: var(--color-bg-card);
           display: flex;
           justify-content: space-between;
           align-items: center;
 
           .badge {
             padding: 4px 12px;
-            background: #1890ff;
-            color: white;
+            background: var(--color-primary);
+            color: var(--color-on-primary);
             border-radius: 12px;
             font-size: 12px;
           }
 
           .keywords {
             font-size: 12px;
-            color: #999;
+            color: var(--color-text-tertiary);
           }
         }
       }
@@ -495,10 +501,10 @@ onBeforeUnmount(() => {
 
   .complete-section {
     :deep(.ant-result) {
-      background: white;
+      background: var(--color-bg-card);
       border-radius: 16px;
       padding: 60px 40px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 32px var(--color-shadow);
     }
   }
 }

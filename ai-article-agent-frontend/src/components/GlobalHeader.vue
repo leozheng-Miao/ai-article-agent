@@ -22,6 +22,17 @@
       <!-- 右侧：用户操作区域 -->
       <a-col>
         <div class="user-login-status">
+          <a-button
+            class="theme-toggle-btn"
+            type="text"
+            :title="isDark ? '切换到亮色模式' : '切换到暗色模式'"
+            @click="toggleTheme"
+          >
+            <template #icon>
+              <span v-if="isDark">🌙</span>
+              <span v-else>☀️</span>
+            </template>
+          </a-button>
           <div v-if="loginUserStore.loginUser.id">
             <a-dropdown>
               <a-space>
@@ -53,10 +64,17 @@ import { useRouter } from 'vue-router'
 import { type MenuProps, message } from 'ant-design-vue'
 import { useLoginUserStore } from '@/stores/loginUser.ts'
 import { userLogout } from '@/api/userController.ts'
-import { LogoutOutlined, HomeOutlined, EditOutlined, UnorderedListOutlined } from '@ant-design/icons-vue'
+import {
+  LogoutOutlined,
+  HomeOutlined,
+  EditOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons-vue'
+import { useTheme } from '@/composables/useTheme'
 
 const loginUserStore = useLoginUserStore()
 const router = useRouter()
+const { isDark, toggleTheme } = useTheme()
 // 当前选中菜单
 const selectedKeys = ref<string[]>(['/'])
 // 监听路由变化，更新当前选中菜单
@@ -135,8 +153,9 @@ const doLogout = async () => {
 
 <style scoped>
 .header {
-  background: #fff;
+  background: var(--color-bg-header);
   padding: 0 24px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header-left {
@@ -153,11 +172,21 @@ const doLogout = async () => {
 .site-title {
   margin: 0;
   font-size: 18px;
-  color: #1890ff;
+  color: var(--color-primary);
   white-space: nowrap;
 }
 
 .ant-menu-horizontal {
   border-bottom: none !important;
+}
+
+.user-login-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle-btn {
+  color: var(--color-text-primary);
 }
 </style>

@@ -105,10 +105,10 @@ const goToList = () => {
 }
 
 .hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-brand);
   padding: 120px 20px;
   text-align: center;
-  color: white;
+  color: var(--color-on-primary);
 }
 
 .container {
@@ -120,7 +120,7 @@ const goToList = () => {
   font-size: 56px;
   font-weight: 700;
   margin: 0 0 24px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px var(--color-shadow);
 }
 
 .hero-subtitle {
@@ -144,31 +144,31 @@ const goToList = () => {
 }
 
 .hero-actions :deep(.ant-btn-primary) {
-  background: white;
-  color: #667eea;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   border: none;
 }
 
 .hero-actions :deep(.ant-btn-primary:hover) {
-  background: #f5f5f5;
+  background: var(--color-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px var(--color-shadow);
 }
 
 .hero-actions :deep(.ant-btn:not(.ant-btn-primary)) {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid white;
+  background: var(--color-hero-secondary-bg);
+  color: var(--color-hero-secondary-text);
+  border: 2px solid var(--color-hero-secondary-border);
 }
 
 .hero-actions :deep(.ant-btn:not(.ant-btn-primary):hover) {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--color-hero-secondary-bg-hover);
   transform: translateY(-2px);
 }
 
 .features-section {
   padding: 80px 20px;
-  background: #f5f5f5;
+  background: var(--color-bg-muted);
 }
 
 .section-title {
@@ -176,7 +176,7 @@ const goToList = () => {
   font-weight: 700;
   text-align: center;
   margin: 0 0 60px;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .feature-card {
@@ -189,14 +189,14 @@ const goToList = () => {
 
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px var(--color-shadow);
 }
 
 .feature-icon {
   font-size: 64px;
   text-align: center;
   padding: 40px 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: var(--gradient-surface);
 }
 
 .feature-card :deep(.ant-card-meta-title) {
@@ -205,7 +205,7 @@ const goToList = () => {
 }
 
 .feature-card :deep(.ant-card-meta-description) {
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 @media (max-width: 768px) {

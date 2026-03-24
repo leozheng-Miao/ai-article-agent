@@ -18,8 +18,52 @@
         </a-space>
       </div>
 
-      <a-spin :spinning="loading" tip="加载中...">
-        <a-card :bordered="false" v-if="article">
+      <a-card v-if="loading" :bordered="false">
+        <div class="detail-skeleton">
+          <div class="title-section">
+            <a-skeleton-input active block class="skeleton-title" />
+            <a-skeleton-input active block class="skeleton-subtitle" />
+            <a-space>
+              <a-skeleton-button active />
+              <a-skeleton-input active />
+            </a-space>
+          </div>
+
+          <a-divider />
+
+          <div class="outline-section">
+            <a-skeleton-input active block class="skeleton-section-title" />
+            <div v-for="index in 2" :key="`outline-${index}`" class="skeleton-outline-item">
+              <a-skeleton-input active block />
+              <a-skeleton active :paragraph="{ rows: 2 }" :title="false" />
+            </div>
+          </div>
+
+          <a-divider />
+
+          <div class="content-section">
+            <a-skeleton-input active block class="skeleton-section-title" />
+            <a-skeleton active :paragraph="{ rows: 6 }" :title="false" />
+          </div>
+
+          <a-divider />
+
+          <div class="images-section">
+            <a-skeleton-input active block class="skeleton-section-title" />
+            <div class="images-grid">
+              <div v-for="index in 3" :key="`image-${index}`" class="image-item">
+                <a-skeleton-image active class="skeleton-image" />
+                <div class="image-info">
+                  <a-skeleton-button active />
+                  <a-skeleton-input active />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a-card>
+
+      <a-card :bordered="false" v-else-if="article">
           <!-- 标题 -->
           <div class="title-section">
             <h1 class="main-title">{{ article.mainTitle }}</h1>
@@ -68,8 +112,7 @@
               </div>
             </div>
           </div>
-        </a-card>
-      </a-spin>
+      </a-card>
     </div>
   </div>
 </template>
@@ -188,7 +231,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .article-detail-page {
   padding: 24px;
-  background: #f0f2f5;
+  background: var(--color-bg-page);
   min-height: 100vh;
 
   .container {
@@ -209,12 +252,12 @@ onMounted(() => {
       font-size: 32px;
       font-weight: 700;
       margin: 0 0 12px;
-      color: #1a1a1a;
+      color: var(--color-text-primary);
     }
 
     .sub-title {
       font-size: 18px;
-      color: #666;
+      color: var(--color-text-secondary);
       margin: 0 0 16px;
     }
 
@@ -222,7 +265,7 @@ onMounted(() => {
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #999;
+      color: var(--color-text-tertiary);
       font-size: 14px;
     }
   }
@@ -231,7 +274,7 @@ onMounted(() => {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 20px;
-    color: #1890ff;
+    color: var(--color-primary);
   }
 
   .outline-section {
@@ -241,7 +284,7 @@ onMounted(() => {
       .outline-item {
         margin-bottom: 16px;
         padding: 16px;
-        background: #f5f5f5;
+        background: var(--color-bg-muted);
         border-radius: 8px;
 
         .outline-title {
@@ -256,7 +299,7 @@ onMounted(() => {
 
           li {
             margin-bottom: 4px;
-            color: #666;
+            color: var(--color-text-secondary);
           }
         }
       }
@@ -269,14 +312,14 @@ onMounted(() => {
     .markdown-content {
       line-height: 1.8;
       font-size: 16px;
-      color: #333;
+      color: var(--color-text-primary);
 
       :deep(h2) {
         font-size: 24px;
         font-weight: 600;
         margin: 32px 0 16px;
         padding-bottom: 8px;
-        border-bottom: 2px solid #eee;
+        border-bottom: 2px solid var(--color-border);
       }
 
       :deep(h3) {
@@ -310,7 +353,7 @@ onMounted(() => {
       .image-item {
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px var(--color-shadow);
         transition: transform 0.3s;
 
         &:hover {
@@ -325,25 +368,61 @@ onMounted(() => {
 
         .image-info {
           padding: 12px;
-          background: #fff;
+          background: var(--color-bg-card);
           display: flex;
           justify-content: space-between;
           align-items: center;
 
           .badge {
             padding: 4px 12px;
-            background: #1890ff;
-            color: white;
+            background: var(--color-primary);
+            color: var(--color-on-primary);
             border-radius: 12px;
             font-size: 12px;
           }
 
           .keywords {
             font-size: 12px;
-            color: #999;
+            color: var(--color-text-tertiary);
           }
         }
       }
+    }
+  }
+
+  .detail-skeleton {
+    .skeleton-title {
+      width: 70%;
+      height: 38px;
+      margin-bottom: 12px;
+    }
+
+    .skeleton-subtitle {
+      width: 50%;
+      height: 24px;
+      margin-bottom: 16px;
+    }
+
+    .skeleton-section-title {
+      width: 180px;
+      margin-bottom: 16px;
+    }
+
+    .skeleton-outline-item {
+      margin-bottom: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--color-bg-muted);
+    }
+
+    .skeleton-image {
+      width: 100%;
+      height: 200px;
+    }
+
+    :deep(.ant-skeleton-image) {
+      width: 100%;
+      height: 200px;
     }
   }
 }
