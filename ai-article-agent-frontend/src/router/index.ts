@@ -23,6 +23,21 @@ const router = createRouter({
       component: UserRegisterPage,
     },
     {
+      path: '/create',
+      name: '创作文章',
+      component: () => import('@/pages/article/ArticleCreatePage.vue'),
+    },
+    {
+      path: '/article/list',
+      name: '文章列表',
+      component: () => import('@/pages/article/ArticleListPage.vue'),
+    },
+    {
+      path: '/article/:taskId',
+      name: '文章详情',
+      component: () => import('@/pages/article/ArticleDetailPage.vue'),
+    },
+    {
       path: '/admin/userManage',
       name: '用户管理',
       component: UserManagePage,
