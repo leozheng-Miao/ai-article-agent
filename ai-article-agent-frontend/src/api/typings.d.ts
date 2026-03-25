@@ -1,6 +1,8 @@
 declare namespace API {
   type ArticleCreateRequest = {
     topic?: string;
+    style?: string;
+    enabledImageMethods?: string[];
   };
 
   type ArticleQueryRequest = {
@@ -184,6 +186,8 @@ declare namespace API {
     userAvatar?: string;
     userProfile?: string;
     userRole?: string;
+    quota?: number;
+    vipTime?: string;
     editTime?: string;
     createTime?: string;
     updateTime?: string;
