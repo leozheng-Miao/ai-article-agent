@@ -58,6 +58,17 @@
           <p class="article-sub-title">{{ article.subTitle }}</p>
         </header>
 
+        <!-- 封面图 -->
+        <div v-if="coverImage" class="article-cover-wrap" @click="openImagePreview(coverImage)">
+          <img :src="coverImage" :alt="article.mainTitle" class="article-cover-img" loading="lazy" />
+          <div class="cover-preview-hint">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            查看大图
+          </div>
+        </div>
+
         <!-- 分隔线 -->
         <div class="article-divider"></div>
 
@@ -207,6 +218,13 @@ const previewUrl = ref('')
 const wordCount = computed(() => {
   const text = article.value?.fullContent || article.value?.content || ''
   return text.replace(/!\[.*?\]\(.*?\)/g, '').replace(/[#*>`\-_\[\]]/g, '').trim().length
+})
+
+// 封面图：取 position === 1 或 type === 'cover' 的图片
+const coverImage = computed<string | null>(() => {
+  if (!article.value?.images?.length) return null
+  const cover = article.value.images.find((img: any) => img.position === 1 || img.type === 'cover')
+  return cover?.url || null
 })
 
 // Markdown 转 HTML
@@ -485,6 +503,44 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
   color: $text-sub;
   margin: 0;
   line-height: 1.6;
+}
+
+// ─── Article Cover ───────────────────────────────────────────────
+.article-cover-wrap {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  cursor: pointer;
+  max-height: 480px;
+
+  &:hover .cover-preview-hint { opacity: 1; }
+  &:hover .article-cover-img { transform: scale(1.02); }
+}
+
+.article-cover-img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.cover-preview-hint {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
 // ─── Dividers ─────────────────────────────────────────────────────

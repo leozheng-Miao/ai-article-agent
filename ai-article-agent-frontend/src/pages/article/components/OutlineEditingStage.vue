@@ -85,7 +85,65 @@
     </button>
 
     <!-- AI 修改面板 -->
-    <div class="ai-panel">
+<!--    <div class="ai-panel" :class="{ 'vip-only': !isVip }">-->
+<!--      <div class="ai-panel-header">-->
+<!--        <div class="ai-panel-title">-->
+<!--          <div class="ai-icon">-->
+<!--            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">-->
+<!--              <path d="M12 2a10 10 0 100 20A10 10 0 0012 2z" stroke="currentColor" stroke-width="2"/>-->
+<!--              <path d="M8 12s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>-->
+<!--              <path d="M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>-->
+<!--            </svg>-->
+<!--          </div>-->
+<!--          AI 助手修改大纲-->
+<!--          <span v-if="!isVip" class="vip-badge-small">-->
+<!--            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 2px;">-->
+<!--              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>-->
+<!--            </svg>-->
+<!--            VIP-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <span class="ai-panel-tip">描述您的需求，AI 将重新调整大纲结构</span>-->
+<!--      </div>-->
+<!--      <div v-if="isVip || isAdmin" class="ai-panel-body">-->
+<!--        <a-textarea-->
+<!--            v-model:value="modifySuggestion"-->
+<!--            placeholder="例如：请在第二章节后增加一个关于实践案例的章节，并删除第四章节..."-->
+<!--            :rows="3"-->
+<!--            :maxlength="500"-->
+<!--            show-count-->
+<!--            class="ai-textarea"-->
+<!--        />-->
+<!--        <a-button-->
+<!--            :loading="aiModifying"-->
+<!--            :disabled="!modifySuggestion.trim()"-->
+<!--            @click="handleAiModify"-->
+<!--            class="ai-modify-btn"-->
+<!--        >-->
+<!--          <template #icon>-->
+<!--            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">-->
+<!--              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--            </svg>-->
+<!--          </template>-->
+<!--          AI 修改大纲-->
+<!--        </a-button>-->
+<!--      </div>-->
+
+<!--      <div v-else class="vip-upgrade-notice">-->
+<!--        <div class="lock-icon">-->
+<!--          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">-->
+<!--            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>-->
+<!--            <path d="M7 11V7a5 5 0 0110 0v4"></path>-->
+<!--          </svg>-->
+<!--        </div>-->
+<!--        <p>AI 修改大纲功能仅限 VIP 会员使用</p>-->
+<!--        <RouterLink to="/vip" class="upgrade-btn">-->
+<!--          立即升级 VIP-->
+<!--        </RouterLink>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="ai-panel" :class="{ 'vip-only': !hasAccess }">
       <div class="ai-panel-header">
         <div class="ai-panel-title">
           <div class="ai-icon">
@@ -96,10 +154,17 @@
             </svg>
           </div>
           AI 助手修改大纲
+          <span v-if="!hasAccess" class="vip-badge-small">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 2px;">
+          <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+        </svg>
+        VIP
+      </span>
         </div>
         <span class="ai-panel-tip">描述您的需求，AI 将重新调整大纲结构</span>
       </div>
-      <div class="ai-panel-body">
+
+      <div v-if="hasAccess" class="ai-panel-body">
         <a-textarea
             v-model:value="modifySuggestion"
             placeholder="例如：请在第二章节后增加一个关于实践案例的章节，并删除第四章节..."
@@ -121,6 +186,19 @@
           </template>
           AI 修改大纲
         </a-button>
+      </div>
+
+      <div v-else class="vip-upgrade-notice">
+        <div class="lock-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0110 0v4"></path>
+          </svg>
+        </div>
+        <p>AI 修改大纲功能仅限 VIP 会员使用</p>
+        <RouterLink to="/vip" class="upgrade-btn">
+          立即升级 VIP
+        </RouterLink>
       </div>
     </div>
 
@@ -167,7 +245,11 @@ interface Props {
   outline: API.OutlineSection[]
   taskId: string
   loading?: boolean
+  isVip?: boolean
+  isAdmin?: boolean
 }
+
+const hasAccess = computed(() => props.isVip || props.isAdmin)
 
 interface Emits {
   (e: 'confirm', outline: OutlineSection[]): void
@@ -551,6 +633,24 @@ $shadow-md: 0 4px 16px rgba(0,0,0,.08);
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+
+  // 非 VIP 时的样式覆盖
+  &.vip-only {
+    background: #f8f9fa;
+    border: 1px solid #e5e7eb;
+
+    .ai-icon {
+      background: #f3f4f6;
+      border-color: #e5e7eb;
+      color: #9ca3af;
+    }
+
+    .ai-panel-title {
+      color: #6b7280;
+    }
+  }
 }
 
 .ai-panel-header {
@@ -596,7 +696,6 @@ $shadow-md: 0 4px 16px rgba(0,0,0,.08);
 .ai-textarea {
   flex: 1;
   border-radius: $radius-sm !important;
-
   :deep(.ant-input) { font-size: 13px; line-height: 1.6; }
   :deep(.ant-input:focus) { border-color: $purple !important; box-shadow: 0 0 0 2px rgba(124,58,237,.12) !important; }
 }
@@ -672,6 +771,76 @@ $shadow-md: 0 4px 16px rgba(0,0,0,.08);
       background: $border !important;
       box-shadow: none !important;
       color: $text-muted !important;
+    }
+  }
+}
+
+/* --- 新增：AI 面板在非 VIP 状态下的变灰处理 --- */
+.ai-panel.vip-only {
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  .ai-icon, .ai-panel-title { color: #999; }
+  .ai-icon { background: #eee; border-color: #ddd; }
+}
+
+/* --- 新增：标题旁的小 VIP 标签 --- */
+.vip-badge-small {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: white;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
+}
+
+/* --- 新增：未升级时的提示区域布局 --- */
+.vip-upgrade-notice {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  p {
+    margin: 0;
+    color: $text-sub;
+    font-size: 14px;
+  }
+
+  .lock-icon {
+    color: $text-muted;
+    margin-bottom: 4px;
+    color: #9ca3af;
+    background: #ffffff;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  /* --- 新增：亮眼的黄金色升级按钮 --- */
+  .upgrade-btn {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #5c3b00;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
     }
   }
 }

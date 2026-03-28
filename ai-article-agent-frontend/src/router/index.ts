@@ -42,6 +42,12 @@ const router = createRouter({
       name: '用户管理',
       component: UserManagePage,
     },
+    {
+      path: '/vip',
+      name: '会员购买',
+      component: () => import('@/pages/VipPage.vue'),
+    },
+
   ],
 })
 

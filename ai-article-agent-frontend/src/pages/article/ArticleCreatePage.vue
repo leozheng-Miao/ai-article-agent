@@ -6,7 +6,10 @@
       <aside class="sidebar-left">
         <div class="sidebar-header">
           <div class="sidebar-icon-wrap">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
           <div>
             <h3 class="sidebar-title">创作流程</h3>
@@ -27,10 +30,18 @@
           >
             <div class="flow-left">
               <div class="flow-indicator">
-                <LoadingOutlined v-if="currentStep === index && isProcessing && !step.isWaiting" class="spin-icon" />
-                <svg v-else-if="currentStep > index" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <LoadingOutlined v-if="currentStep === index && isProcessing && !step.isWaiting" class="spin-icon"/>
+                <svg v-else-if="currentStep > index" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                </svg>
                 <!-- 等待用户交互的步骤用特殊图标 -->
-                <svg v-else-if="step.isWaiting && currentStep === index" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <svg v-else-if="step.isWaiting && currentStep === index" width="14" height="14" viewBox="0 0 24 24"
+                     fill="none">
+                  <path
+                      d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
                 <span v-else class="step-number">{{ index + 1 }}</span>
               </div>
               <div v-if="index < agentSteps.length - 1" class="flow-connector"></div>
@@ -63,7 +74,11 @@
 
             <div class="input-card">
               <div class="input-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
                 输入选题
               </div>
               <a-textarea
@@ -79,7 +94,11 @@
               <div class="config-block">
                 <div class="config-block-header">
                   <div class="config-block-label">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                     文章风格
                   </div>
                   <span class="config-block-tip">不选择使用默认风格</span>
@@ -101,22 +120,73 @@
               <div class="config-block">
                 <div class="config-block-header">
                   <div class="config-block-label">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+                      <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                     配图方式
                   </div>
                   <span class="config-block-tip">不选择表示支持所有方式</span>
                 </div>
+                <!--                <div class="method-options">-->
+                <!--                  <label-->
+                <!--                      v-for="method in imageMethodOptions"-->
+                <!--                      :key="method.value"-->
+                <!--                      :class="['method-option', { selected: selectedImageMethods.includes(method.value) }]"-->
+                <!--                      @click="toggleMethod(method.value)"-->
+                <!--                  >-->
+                <!--                    <span class="method-dot" :style="{ background: method.color }"></span>-->
+                <!--                    <span class="method-name">{{ method.label }}</span>-->
+                <!--                    <svg v-if="selectedImageMethods.includes(method.value)" class="method-check" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>-->
+                <!--                  </label>-->
+                <!--                </div>-->
+
                 <div class="method-options">
                   <label
                       v-for="method in imageMethodOptions"
                       :key="method.value"
-                      :class="['method-option', { selected: selectedImageMethods.includes(method.value) }]"
-                      @click="toggleMethod(method.value)"
+                      :class="[
+      'method-option',
+      {
+        selected: selectedImageMethods.includes(method.value),
+        disabled: method.vipOnly && (!isVip && !isAdmin),
+      },
+    ]"
+                      @click="handleMethodClick(method)"
                   >
                     <span class="method-dot" :style="{ background: method.color }"></span>
+
                     <span class="method-name">{{ method.label }}</span>
-                    <svg v-if="selectedImageMethods.includes(method.value)" class="method-check" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+                    <!-- 👑 VIP 图标 -->
+                    <CrownOutlined v-if="method.vipOnly && (!isVip && !isAdmin)" class="vip-icon"/>
+
+                    <!-- ✔ 选中 -->
+                    <svg
+                        v-if="selectedImageMethods.includes(method.value)"
+                        class="method-check"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                      <path
+                          d="M20 6L9 17l-5-5"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                      />
+                    </svg>
                   </label>
+                </div>
+
+                <!-- 👇 VIP 提示 -->
+                <div v-if="!isVip && !isAdmin" class="vip-notice">
+                  <CrownOutlined/>
+                  <span>AI 生图和 SVG 图表为 VIP 专属功能，</span>
+                  <RouterLink to="/vip" class="upgrade-link">立即升级</RouterLink>
                 </div>
               </div>
 
@@ -128,11 +198,13 @@
                   @click="startCreate"
                   class="create-btn"
               >
-                <template #icon><RocketOutlined /></template>
+                <template #icon>
+                  <RocketOutlined/>
+                </template>
                 开始创作
               </a-button>
               <div v-if="!hasQuota" class="quota-warning">
-                <WarningOutlined />
+                <WarningOutlined/>
                 <span>配额已用完，无法创建文章</span>
               </div>
             </div>
@@ -155,14 +227,15 @@
           />
 
           <!-- 阶段 3：大纲生成中（流式展示） -->
-          <div v-else-if="currentPhase === 'OUTLINE_GENERATING'" key="outline-generating" class="outline-generating-state">
+          <div v-else-if="currentPhase === 'OUTLINE_GENERATING'" key="outline-generating"
+               class="outline-generating-state">
             <div v-if="article.mainTitle" class="preview-header">
               <h1 class="article-title">{{ article.mainTitle }}</h1>
               <p class="article-subtitle">{{ article.subTitle }}</p>
             </div>
             <div class="outline-preview">
               <div class="section-label">
-                <BulbOutlined />
+                <BulbOutlined/>
                 <span>AI 正在规划文章大纲</span>
                 <span class="typing-cursor">|</span>
               </div>
@@ -191,6 +264,8 @@
               :outline="outline"
               :loading="confirmLoading"
               :task-id="taskId"
+              :isVip="isVip"
+              :isAdmin="isAdmin"
               @confirm="handleConfirmOutline"
           />
 
@@ -208,11 +283,11 @@
 
             <div v-if="currentStep >= 3 && imageProgress > 0" class="image-progress-box">
               <div class="progress-header">
-                <PictureOutlined />
+                <PictureOutlined/>
                 <span>正在生成配图</span>
                 <span class="progress-count">{{ imageCount }}/{{ totalImages }}</span>
               </div>
-              <a-progress :percent="imageProgress" status="active" :stroke-color="{ from: '#22C55E', to: '#16A34A' }" />
+              <a-progress :percent="imageProgress" status="active" :stroke-color="{ from: '#22C55E', to: '#16A34A' }"/>
             </div>
 
             <div v-if="!article.content" class="loading-placeholder">
@@ -225,7 +300,12 @@
           <div v-else-if="currentPhase === 'COMPLETED'" key="completed" class="completed-state">
             <div class="success-banner">
               <div class="success-banner-inner">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round"/>
+                  <path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                </svg>
                 文章创作完成！
               </div>
             </div>
@@ -246,9 +326,16 @@
 
         <!-- 输入阶段：配额 -->
         <div v-if="currentPhase === 'INPUT'" class="panel-card quota-card">
-          <h4 class="panel-title"><CrownOutlined /> 创作配额</h4>
+          <h4 class="panel-title">
+            <CrownOutlined/>
+            创作配额
+          </h4>
           <div v-if="isAdmin" class="quota-admin">
             <span class="quota-badge admin">管理员</span>
+            <span class="quota-text">无限次</span>
+          </div>
+          <div v-else-if="isVip" class="quota-admin">
+            <span class="quota-badge vip">VIP 会员</span>
             <span class="quota-text">无限次</span>
           </div>
           <div v-else class="quota-info">
@@ -269,15 +356,23 @@
 
         <!-- 输入阶段：热门选题 -->
         <div v-if="currentPhase === 'INPUT'" class="panel-card">
-          <h4 class="panel-title"><BulbOutlined /> 热门选题</h4>
+          <h4 class="panel-title">
+            <BulbOutlined/>
+            热门选题
+          </h4>
           <div class="hot-tags">
-            <span v-for="example in exampleTopics" :key="example" class="hot-tag" @click="topic = example">{{ example }}</span>
+            <span v-for="example in exampleTopics" :key="example" class="hot-tag" @click="topic = example">{{
+                example
+              }}</span>
           </div>
         </div>
 
         <!-- 输入阶段：爆款技巧 -->
         <div v-if="currentPhase === 'INPUT'" class="panel-card">
-          <h4 class="panel-title"><StarOutlined /> 爆款技巧</h4>
+          <h4 class="panel-title">
+            <StarOutlined/>
+            爆款技巧
+          </h4>
           <div class="tips-list">
             <div v-for="tip in tips" :key="tip.title" class="tip-item">
               <div class="tip-icon">{{ tip.num }}</div>
@@ -303,7 +398,11 @@
         <!-- 标题选择阶段提示 -->
         <div v-if="currentPhase === 'TITLE_SELECTING'" class="panel-card phase-info-card">
           <div class="phase-icon user-action">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round"/>
+              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+            </svg>
           </div>
           <div class="phase-info-text">
             <div class="phase-info-title">请选择标题</div>
@@ -311,7 +410,10 @@
           </div>
         </div>
         <div v-if="currentPhase === 'TITLE_SELECTING'" class="panel-card">
-          <h4 class="panel-title"><BulbOutlined /> 选题提示</h4>
+          <h4 class="panel-title">
+            <BulbOutlined/>
+            选题提示
+          </h4>
           <div class="tips-list">
             <div class="tip-item">
               <div class="tip-icon">💡</div>
@@ -344,7 +446,12 @@
         <!-- 大纲编辑阶段提示 -->
         <div v-if="currentPhase === 'OUTLINE_EDITING'" class="panel-card phase-info-card">
           <div class="phase-icon user-action">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
           <div class="phase-info-text">
             <div class="phase-info-title">请编辑大纲</div>
@@ -353,24 +460,38 @@
         </div>
         <div v-if="currentPhase === 'OUTLINE_EDITING'" class="panel-card">
           <h4 class="panel-title">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+              <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="currentColor" stroke-width="2"/>
+              <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
             使用提示
           </h4>
           <div class="tips-list">
             <div class="tip-item">
               <div class="tip-icon">⠿</div>
-              <div><div class="tip-title">拖拽调整顺序</div><div class="tip-desc">拖动左侧图标移动章节</div></div>
+              <div>
+                <div class="tip-title">拖拽调整顺序</div>
+                <div class="tip-desc">拖动左侧图标移动章节</div>
+              </div>
             </div>
             <div class="tip-item">
               <div class="tip-icon">🤖</div>
-              <div><div class="tip-title">AI 辅助修改</div><div class="tip-desc">描述需求，AI 自动重构</div></div>
+              <div>
+                <div class="tip-title">AI 辅助修改</div>
+                <div class="tip-desc">描述需求，AI 自动重构</div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- 正文生成中 -->
         <div v-if="currentPhase === 'CONTENT_GENERATING'" class="panel-card progress-card">
-          <h4 class="panel-title"><ClockCircleOutlined /> 创作进度</h4>
+          <h4 class="panel-title">
+            <ClockCircleOutlined/>
+            创作进度
+          </h4>
           <div class="progress-steps">
             <div class="progress-row">
               <span class="p-label">当前步骤</span>
@@ -382,24 +503,39 @@
             </div>
           </div>
           <div class="tip-notice">
-            <InfoCircleOutlined />
+            <InfoCircleOutlined/>
             <span>AI 正在努力创作中，请耐心等待...</span>
           </div>
         </div>
 
         <!-- 完成操作 -->
         <div v-if="currentPhase === 'COMPLETED'" class="panel-card action-card">
-          <h4 class="panel-title"><ThunderboltOutlined /> 快捷操作</h4>
+          <h4 class="panel-title">
+            <ThunderboltOutlined/>
+            快捷操作
+          </h4>
           <div class="action-list">
-            <button class="action-btn secondary" @click="copyContent"><CopyOutlined /> 复制全文</button>
-            <button class="action-btn secondary" @click="viewArticle"><EyeOutlined /> 查看详情</button>
-            <button class="action-btn primary" @click="resetCreate"><RedoOutlined /> 再创作一篇</button>
+            <button class="action-btn secondary" @click="copyContent">
+              <CopyOutlined/>
+              复制全文
+            </button>
+            <button class="action-btn secondary" @click="viewArticle">
+              <EyeOutlined/>
+              查看详情
+            </button>
+            <button class="action-btn primary" @click="resetCreate">
+              <RedoOutlined/>
+              再创作一篇
+            </button>
           </div>
         </div>
 
         <!-- 完成：文章统计 -->
         <div v-if="currentPhase === 'COMPLETED'" class="panel-card stats-card">
-          <h4 class="panel-title"><BarChartOutlined /> 文章统计</h4>
+          <h4 class="panel-title">
+            <BarChartOutlined/>
+            文章统计
+          </h4>
           <div class="stats-grid">
             <div class="stat-item">
               <div class="stat-value">{{ (article.fullContent || article.content || '').length }}</div>
@@ -414,8 +550,12 @@
 
         <!-- 底部帮助 -->
         <div class="panel-footer">
-          <a class="help-link"><QuestionCircleOutlined /> 使用帮助</a>
-          <a class="help-link"><MessageOutlined /> 反馈建议</a>
+          <a class="help-link">
+            <QuestionCircleOutlined/>
+            使用帮助</a>
+          <a class="help-link">
+            <MessageOutlined/>
+            反馈建议</a>
         </div>
       </aside>
     </div>
@@ -428,20 +568,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeUnmount, onMounted, nextTick, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { message } from 'ant-design-vue'
-import { useLoginUserStore } from '@/stores/loginUser'
-import { USER_ROLE_ADMIN } from '@/constants/user'
+import {ref, onBeforeUnmount, onMounted, nextTick, computed} from 'vue'
+import {useRouter, useRoute} from 'vue-router'
+import {message} from 'ant-design-vue'
+import {useLoginUserStore} from '@/stores/loginUser'
+import {USER_ROLE_ADMIN, USER_ROLE_VIP} from '@/constants/user'
 import {
   RocketOutlined, LoadingOutlined, CopyOutlined, EyeOutlined, RedoOutlined,
   ThunderboltOutlined, BulbOutlined, StarOutlined, ClockCircleOutlined,
   InfoCircleOutlined, BarChartOutlined, QuestionCircleOutlined, MessageOutlined,
   PictureOutlined, WarningOutlined, CrownOutlined
 } from '@ant-design/icons-vue'
-import { createArticle, confirmTitle, confirmOutline } from '@/api/articleController'
-import { connectSSE, type SSEMessage, type SSEConnection } from '@/utils/sse'
-import { marked } from 'marked'
+import {createArticle, confirmTitle, confirmOutline} from '@/api/articleController'
+import {connectSSE, type SSEMessage, type SSEConnection} from '@/utils/sse'
+import {marked} from 'marked'
 import TitleSelectingStage from './components/TitleSelectingStage.vue'
 import OutlineEditingStage from './components/OutlineEditingStage.vue'
 
@@ -450,42 +590,43 @@ const route = useRoute()
 const loginUserStore = useLoginUserStore()
 
 const isAdmin = computed(() => loginUserStore.loginUser.userRole === USER_ROLE_ADMIN)
+const isVip = computed(() => loginUserStore.loginUser.userRole === USER_ROLE_VIP)
 const quota = computed(() => loginUserStore.loginUser.quota ?? 0)
-const hasQuota = computed(() => isAdmin.value || quota.value > 0)
+const hasQuota = computed(() => isAdmin.value || isVip.value || quota.value > 0)
 
 // ── 左侧流程步骤（含等待用户交互标记）────────────────────────────
 const agentSteps = [
-  { title: '生成标题', description: 'AI 生成多个标题方案', isWaiting: false },
-  { title: '选择标题', description: '您选择或自定义标题', isWaiting: true },
-  { title: '生成大纲', description: 'AI 规划文章章节结构', isWaiting: false },
-  { title: '编辑大纲', description: '您调整并确认大纲', isWaiting: true },
-  { title: '撰写正文', description: '流式生成高质量内容', isWaiting: false },
-  { title: '生成配图', description: '自动匹配高清配图', isWaiting: false },
-  { title: '图文合成', description: '配图插入正文完成', isWaiting: false },
+  {title: '生成标题', description: 'AI 生成多个标题方案', isWaiting: false},
+  {title: '选择标题', description: '您选择或自定义标题', isWaiting: true},
+  {title: '生成大纲', description: 'AI 规划文章章节结构', isWaiting: false},
+  {title: '编辑大纲', description: '您调整并确认大纲', isWaiting: true},
+  {title: '撰写正文', description: '流式生成高质量内容', isWaiting: false},
+  {title: '生成配图', description: '自动匹配高清配图', isWaiting: false},
+  {title: '图文合成', description: '配图插入正文完成', isWaiting: false},
 ]
 
 const tips = [
-  { num: '1', title: '抓住痛点', desc: '直击用户最关心的问题' },
-  { num: '2', title: '制造悬念', desc: '让读者产生好奇心' },
-  { num: '3', title: '数字吸引', desc: '使用具体数据增加说服力' },
+  {num: '1', title: '抓住痛点', desc: '直击用户最关心的问题'},
+  {num: '2', title: '制造悬念', desc: '让读者产生好奇心'},
+  {num: '3', title: '数字吸引', desc: '使用具体数据增加说服力'},
 ]
 const exampleTopics = ['2026年AI如何改变职场', '程序员如何提升竞争力', '远程办公的利与弊', '如何培养深度思考', '新能源汽车趋势', '健康饮食指南']
 
 // ── 选项数据 ─────────────────────────────────────────────────────
 const styleOptions = [
-  { value: '', label: '默认', emoji: '✨' },
-  { value: 'tech', label: '科技', emoji: '🔬' },
-  { value: 'emotional', label: '情感', emoji: '💫' },
-  { value: 'educational', label: '教育', emoji: '📚' },
-  { value: 'humorous', label: '幽默', emoji: '😄' },
+  {value: '', label: '默认', emoji: '✨'},
+  {value: 'tech', label: '科技', emoji: '🔬'},
+  {value: 'emotional', label: '情感', emoji: '💫'},
+  {value: 'educational', label: '教育', emoji: '📚'},
+  {value: 'humorous', label: '幽默', emoji: '😄'},
 ]
 const imageMethodOptions = [
-  { value: 'PEXELS', label: 'Pexels', color: '#059669' },
-  { value: 'NANO_BANANA', label: 'AI 生成', color: '#7c3aed' },
-  { value: 'MERMAID', label: 'Mermaid', color: '#2563eb' },
-  { value: 'ICONIFY', label: 'Iconify', color: '#d97706' },
-  { value: 'SVG_DIAGRAM', label: 'SVG', color: '#db2777' },
-  { value: 'EMOJI_PACK', label: '表情包', color: '#ea580c' },
+  {value: 'PEXELS', label: 'Pexels', color: '#059669'},
+  {value: 'NANO_BANANA', label: 'AI 生成', color: '#7c3aed', vipOnly: true},
+  {value: 'MERMAID', label: 'Mermaid', color: '#2563eb'},
+  {value: 'ICONIFY', label: 'Iconify', color: '#d97706'},
+  {value: 'SVG_DIAGRAM', label: 'SVG', color: '#db2777', vipOnly: true},
+  {value: 'EMOJI_PACK', label: '表情包', color: '#ea580c'},
 ]
 
 // ── 状态 ─────────────────────────────────────────────────────────
@@ -494,7 +635,14 @@ const selectedStyle = ref('')
 const selectedImageMethods = ref<string[]>([])
 
 // 阶段状态
-type Phase = 'INPUT' | 'TITLE_GENERATING' | 'TITLE_SELECTING' | 'OUTLINE_GENERATING' | 'OUTLINE_EDITING' | 'CONTENT_GENERATING' | 'COMPLETED'
+type Phase =
+    'INPUT'
+    | 'TITLE_GENERATING'
+    | 'TITLE_SELECTING'
+    | 'OUTLINE_GENERATING'
+    | 'OUTLINE_EDITING'
+    | 'CONTENT_GENERATING'
+    | 'COMPLETED'
 const currentPhase = ref<Phase>('INPUT')
 const currentStep = ref(0)
 
@@ -522,11 +670,13 @@ const totalImages = ref(5)
 const imageProgress = ref(0)
 
 // 文章数据
-const article = ref<Partial<API.ArticleVO>>({ mainTitle: '', subTitle: '', content: '', fullContent: '', images: [] })
+const article = ref<Partial<API.ArticleVO>>({mainTitle: '', subTitle: '', content: '', fullContent: '', images: []})
 
 // 滚动
 const mainContentRef = ref<HTMLElement | null>(null)
-const scrollToBottom = () => nextTick(() => { if (mainContentRef.value) mainContentRef.value.scrollTop = mainContentRef.value.scrollHeight })
+const scrollToBottom = () => nextTick(() => {
+  if (mainContentRef.value) mainContentRef.value.scrollTop = mainContentRef.value.scrollHeight
+})
 
 // ── 工具方法 ─────────────────────────────────────────────────────
 const toggleMethod = (value: string) => {
@@ -535,10 +685,25 @@ const toggleMethod = (value: string) => {
   else selectedImageMethods.value.splice(idx, 1)
 }
 
+const handleMethodClick = (method: any) => {
+  // 非 VIP 禁止使用 VIP 功能
+  if (method.vipOnly && !isVip.value) {
+    message.warning('该功能仅限 VIP 会员')
+    return
+  }
+
+  toggleMethod(method.value)
+}
+
 const markdownToHtml = (markdown: string) => marked(markdown)
 
 // ── 大纲流式解析 ─────────────────────────────────────────────────
-interface OutlineItem { title: string; points: string[]; section: number }
+interface OutlineItem {
+  title: string;
+  points: string[];
+  section: number
+}
+
 const parsedOutline = computed<OutlineItem[]>(() => {
   if (!outlineRaw.value) return []
   const str = outlineRaw.value.trim()
@@ -559,14 +724,22 @@ const parsedOutline = computed<OutlineItem[]>(() => {
         if (Array.isArray(parsed)) return parsed
       }
       return []
-    } catch { return [] }
+    } catch {
+      return []
+    }
   }
 })
 
 // ── 开始创作 ─────────────────────────────────────────────────────
 const startCreate = async () => {
-  if (!topic.value.trim()) { message.warning('请输入选题'); return }
-  if (!hasQuota.value) { message.error('配额不足，无法创建文章'); return }
+  if (!topic.value.trim()) {
+    message.warning('请输入选题');
+    return
+  }
+  if (!hasQuota.value) {
+    message.error('配额不足，无法创建文章');
+    return
+  }
   closeSSE()
   isProcessing.value = true
   currentStep.value = 0
@@ -582,7 +755,11 @@ const startCreate = async () => {
     await loginUserStore.fetchLoginUser()
     // 不直接切换阶段，等待 SSE 消息
     currentPhase.value = 'TITLE_GENERATING'
-    sseConnection = connectSSE(taskId.value, { onMessage: handleSSEMessage, onError: handleSSEError, onComplete: handleSSEComplete })
+    sseConnection = connectSSE(taskId.value, {
+      onMessage: handleSSEMessage,
+      onError: handleSSEError,
+      onComplete: handleSSEComplete
+    })
   } catch (error: any) {
     message.error(error.message || '创建任务失败')
     isProcessing.value = false
@@ -676,8 +853,12 @@ const handleSSEError = (_error: Event) => {
   message.error('连接失败，请重试')
   isProcessing.value = false
 }
-const handleSSEComplete = () => {}
-const closeSSE = () => { sseConnection?.cancel(); sseConnection = null }
+const handleSSEComplete = () => {
+}
+const closeSSE = () => {
+  sseConnection?.cancel();
+  sseConnection = null
+}
 
 // ── 确认标题 ─────────────────────────────────────────────────────
 const handleConfirmTitle = async (data: { mainTitle: string; subTitle: string; userDescription: string }) => {
@@ -713,7 +894,7 @@ const handleConfirmOutline = async (outlineData: Array<{ section: number; title:
       outline: outlineData,
     })
     // 更新 outlineRaw 为用户确认后的大纲（用于正文生成阶段若需展示）
-    outlineRaw.value = JSON.stringify({ sections: outlineData })
+    outlineRaw.value = JSON.stringify({sections: outlineData})
     isProcessing.value = true
     article.value.content = ''
     // 不直接切换阶段，等待 SSE 推送 AGENT3_STREAMING
@@ -729,10 +910,18 @@ const handleConfirmOutline = async (outlineData: Array<{ section: number; title:
 // ── 工具操作 ─────────────────────────────────────────────────────
 const copyContent = async () => {
   const content = article.value.fullContent || article.value.content || ''
-  try { await navigator.clipboard.writeText(content); message.success('已复制到剪贴板') } catch { message.error('复制失败') }
+  try {
+    await navigator.clipboard.writeText(content);
+    message.success('已复制到剪贴板')
+  } catch {
+    message.error('复制失败')
+  }
 }
 
-const viewArticle = () => { if (!taskId.value) return; router.push(`/article/${taskId.value}`) }
+const viewArticle = () => {
+  if (!taskId.value) return;
+  router.push(`/article/${taskId.value}`)
+}
 
 const resetCreate = () => {
   closeSSE()
@@ -751,10 +940,12 @@ const resetCreate = () => {
   imageCount.value = 0
   imageProgress.value = 0
   totalImages.value = 5
-  article.value = { mainTitle: '', subTitle: '', content: '', fullContent: '', images: [] }
+  article.value = {mainTitle: '', subTitle: '', content: '', fullContent: '', images: []}
 }
 
-onMounted(() => { if (route.query.topic) topic.value = route.query.topic as string })
+onMounted(() => {
+  if (route.query.topic) topic.value = route.query.topic as string
+})
 onBeforeUnmount(() => closeSSE())
 </script>
 
@@ -778,9 +969,9 @@ $radius-sm: 8px;
 $radius-md: 12px;
 $radius-lg: 16px;
 $radius-xl: 20px;
-$shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-$shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
-$shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, .08), 0 1px 4px rgba(0, 0, 0, .04);
+$shadow-lg: 0 8px 32px rgba(0, 0, 0, .10), 0 2px 8px rgba(0, 0, 0, .06);
 
 // ─── Page Shell ───────────────────────────────────────────────────
 .article-create-page {
@@ -827,10 +1018,23 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   flex-shrink: 0;
 }
 
-.sidebar-title { font-size: 15px; font-weight: 700; margin: 0 0 2px; color: $text; letter-spacing: -0.2px; }
-.sidebar-subtitle { font-size: 12px; color: $text-muted; margin: 0; }
+.sidebar-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  color: $text;
+  letter-spacing: -0.2px;
+}
 
-.flow-timeline { flex: 1; }
+.sidebar-subtitle {
+  font-size: 12px;
+  color: $text-muted;
+  margin: 0;
+}
+
+.flow-timeline {
+  flex: 1;
+}
 
 .flow-item {
   display: flex;
@@ -855,8 +1059,14 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   border-radius: 1px;
   transition: background 0.3s;
 }
-.flow-item.completed .flow-connector { background: $green; }
-.flow-item.active .flow-connector { background: linear-gradient(180deg, $green 50%, $border 100%); }
+
+.flow-item.completed .flow-connector {
+  background: $green;
+}
+
+.flow-item.active .flow-connector {
+  background: linear-gradient(180deg, $green 50%, $border 100%);
+}
 
 .flow-indicator {
   width: 30px;
@@ -869,18 +1079,47 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   transition: all 0.25s;
   flex-shrink: 0;
 
-  .pending & { background: $bg; color: $text-muted; border: 1.5px solid $border; }
-  .active & { background: $white; color: $green; border: 2px solid $green; box-shadow: 0 0 0 4px $green-mid; }
-  .completed & { background: $green; color: $white; border: none; }
+  .pending & {
+    background: $bg;
+    color: $text-muted;
+    border: 1.5px solid $border;
+  }
+
+  .active & {
+    background: $white;
+    color: $green;
+    border: 2px solid $green;
+    box-shadow: 0 0 0 4px $green-mid;
+  }
+
+  .completed & {
+    background: $green;
+    color: $white;
+    border: none;
+  }
 
   // 等待用户操作的步骤：琥珀色
-  .waiting & { background: $white; color: $amber; border: 2px solid $amber; box-shadow: 0 0 0 4px rgba(245,158,11,0.1); }
+  .waiting & {
+    background: $white;
+    color: $amber;
+    border: 2px solid $amber;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+  }
 
-  .step-number { font-weight: 700; font-size: 12px; }
-  .spin-icon { animation: spin 1s linear infinite; }
+  .step-number {
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  .spin-icon {
+    animation: spin 1s linear infinite;
+  }
 }
 
-.flow-content { flex: 1; padding-bottom: 20px; }
+.flow-content {
+  flex: 1;
+  padding-bottom: 20px;
+}
 
 .flow-title {
   font-size: 13px;
@@ -889,12 +1128,24 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   margin-bottom: 2px;
   line-height: 30px;
 
-  .pending & { color: $text-muted; }
-  .active & { color: $green-dark; }
-  .waiting & { color: darken($amber, 10%); }
+  .pending & {
+    color: $text-muted;
+  }
+
+  .active & {
+    color: $green-dark;
+  }
+
+  .waiting & {
+    color: darken($amber, 10%);
+  }
 }
 
-.flow-desc { font-size: 11px; color: $text-muted; line-height: 1.5; }
+.flow-desc {
+  font-size: 11px;
+  color: $text-muted;
+  line-height: 1.5;
+}
 
 .flow-status {
   display: inline-flex;
@@ -915,14 +1166,16 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
 }
 
 .status-dot {
-  width: 5px; height: 5px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: $green;
   animation: pulse 1.5s infinite;
 }
 
 .waiting-dot {
-  width: 5px; height: 5px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: $amber;
   animation: pulse 2s infinite;
@@ -938,9 +1191,19 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
 
 // ─── Transition ───────────────────────────────────────────────────
 .fade-slide-enter-active,
-.fade-slide-leave-active { transition: all 0.28s ease; }
-.fade-slide-enter-from { opacity: 0; transform: translateX(24px); }
-.fade-slide-leave-to { opacity: 0; transform: translateX(-24px); }
+.fade-slide-leave-active {
+  transition: all 0.28s ease;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(-24px);
+}
 
 // ─── Input State ─────────────────────────────────────────────────
 .input-state {
@@ -949,7 +1212,10 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   padding-top: 48px;
 }
 
-.input-hero { text-align: center; margin-bottom: 36px; }
+.input-hero {
+  text-align: center;
+  margin-bottom: 36px;
+}
 
 .hero-badge {
   display: inline-block;
@@ -972,7 +1238,11 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   line-height: 1.2;
 }
 
-.hero-sub { font-size: 15px; color: $text-sub; margin: 0; }
+.hero-sub {
+  font-size: 15px;
+  color: $text-sub;
+  margin: 0;
+}
 
 .input-card {
   background: $white;
@@ -999,8 +1269,16 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   border-radius: $radius-md !important;
   resize: none;
 
-  &:focus { border-color: $green !important; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12) !important; }
-  :deep(textarea) { font-size: 15px; line-height: 1.7; padding: 14px 16px; }
+  &:focus {
+    border-color: $green !important;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12) !important;
+  }
+
+  :deep(textarea) {
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 14px 16px;
+  }
 }
 
 .create-btn {
@@ -1016,9 +1294,20 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
     letter-spacing: 0.3px;
     transition: all 0.2s;
 
-    &:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(34, 197, 94, 0.45) !important; }
-    &:active:not(:disabled) { transform: translateY(0); }
-    &:disabled, &.ant-btn-disabled { background: $border !important; box-shadow: none !important; color: $text-muted !important; }
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.45) !important;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled, &.ant-btn-disabled {
+      background: $border !important;
+      box-shadow: none !important;
+      color: $text-muted !important;
+    }
   }
 }
 
@@ -1037,7 +1326,11 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
 }
 
 // ─── Config Blocks ────────────────────────────────────────────────
-.config-block { display: flex; flex-direction: column; gap: 10px; }
+.config-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .config-block-header {
   display: flex;
@@ -1054,9 +1347,16 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   color: $text-sub;
 }
 
-.config-block-tip { font-size: 11px; color: $text-muted; }
+.config-block-tip {
+  font-size: 11px;
+  color: $text-muted;
+}
 
-.style-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.style-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 .style-option {
   display: flex;
@@ -1070,14 +1370,39 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   transition: all 0.15s;
   user-select: none;
 
-  &:hover { border-color: $green; background: rgba(34, 197, 94, 0.04); }
-  &.selected { border-color: $green; background: $green-mid; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1); }
+  &:hover {
+    border-color: $green;
+    background: rgba(34, 197, 94, 0.04);
+  }
+
+  &.selected {
+    border-color: $green;
+    background: $green-mid;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+  }
 }
 
-.style-emoji { font-size: 15px; line-height: 1; }
-.style-name { font-size: 13px; font-weight: 500; color: $text; .selected & { color: $green-dark; font-weight: 600; } }
+.style-emoji {
+  font-size: 15px;
+  line-height: 1;
+}
 
-.method-options { display: flex; flex-wrap: wrap; gap: 7px; }
+.style-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: $text;
+
+  .selected & {
+    color: $green-dark;
+    font-weight: 600;
+  }
+}
+
+.method-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
 
 .method-option {
   display: flex;
@@ -1091,13 +1416,39 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   transition: all 0.15s;
   user-select: none;
 
-  &:hover { border-color: $green; background: rgba(34, 197, 94, 0.04); }
-  &.selected { border-color: $green; background: $green-mid; }
+  &:hover {
+    border-color: $green;
+    background: rgba(34, 197, 94, 0.04);
+  }
+
+  &.selected {
+    border-color: $green;
+    background: $green-mid;
+  }
 }
 
-.method-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.method-name { font-size: 12px; font-weight: 500; color: $text-sub; .selected & { color: $green-dark; font-weight: 600; } }
-.method-check { color: $green-dark; flex-shrink: 0; }
+.method-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.method-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: $text-sub;
+
+  .selected & {
+    color: $green-dark;
+    font-weight: 600;
+  }
+}
+
+.method-check {
+  color: $green-dark;
+  flex-shrink: 0;
+}
 
 // ─── Loading Stage ────────────────────────────────────────────────
 .loading-stage {
@@ -1118,7 +1469,11 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   letter-spacing: -0.3px;
 }
 
-.loading-sub { font-size: 14px; color: $text-sub; margin: 0; }
+.loading-sub {
+  font-size: 14px;
+  color: $text-sub;
+  margin: 0;
+}
 
 // Loading Ring（多尺寸）
 .loading-ring {
@@ -1130,12 +1485,23 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   animation: spin 0.8s linear infinite;
   flex-shrink: 0;
 
-  &.lg { width: 56px; height: 56px; border-width: 4px; }
-  &.sm { width: 22px; height: 22px; border-width: 2px; }
+  &.lg {
+    width: 56px;
+    height: 56px;
+    border-width: 4px;
+  }
+
+  &.sm {
+    width: 22px;
+    height: 22px;
+    border-width: 2px;
+  }
 }
 
 // ─── Outline Generating State ─────────────────────────────────────
-.outline-generating-state { max-width: 100%; }
+.outline-generating-state {
+  max-width: 100%;
+}
 
 .outline-loading {
   display: flex;
@@ -1154,8 +1520,20 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   border-bottom: 1px solid $border-light;
 }
 
-.article-title { font-size: 26px; font-weight: 800; margin: 0 0 8px; color: $text; line-height: 1.35; letter-spacing: -0.5px; }
-.article-subtitle { font-size: 15px; color: $text-sub; margin: 0; }
+.article-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  color: $text;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+}
+
+.article-subtitle {
+  font-size: 15px;
+  color: $text-sub;
+  margin: 0;
+}
 
 // ─── Outline Preview ──────────────────────────────────────────────
 .outline-preview {
@@ -1178,7 +1556,11 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   letter-spacing: 0.5px;
 }
 
-.outline-list { display: flex; flex-direction: column; gap: 10px; }
+.outline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .outline-item {
   display: flex;
@@ -1190,7 +1572,9 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   box-shadow: $shadow-sm;
   transition: box-shadow 0.2s;
 
-  &:hover { box-shadow: $shadow-md; }
+  &:hover {
+    box-shadow: $shadow-md;
+  }
 }
 
 .outline-index {
@@ -1208,30 +1592,96 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   margin-top: 1px;
 }
 
-.outline-title { font-size: 13px; font-weight: 700; color: $text; margin-bottom: 6px; }
+.outline-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: $text;
+  margin-bottom: 6px;
+}
+
 .outline-points {
-  margin: 0; padding-left: 16px;
-  li { font-size: 12px; color: $text-sub; line-height: 1.6; margin-bottom: 3px; &:last-child { margin-bottom: 0; } }
+  margin: 0;
+  padding-left: 16px;
+
+  li {
+    font-size: 12px;
+    color: $text-sub;
+    line-height: 1.6;
+    margin-bottom: 3px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 // ─── Content Preview / Creating State ────────────────────────────
-.creating-state, .completed-state { max-width: 100%; }
-.content-preview { line-height: 1.8; }
+.creating-state, .completed-state {
+  max-width: 100%;
+}
+
+.content-preview {
+  line-height: 1.8;
+}
 
 .markdown-body {
   line-height: 1.85;
   font-size: 15px;
   color: $text;
 
-  :deep(h2) { font-size: 20px; font-weight: 700; margin: 32px 0 14px; padding-bottom: 10px; border-bottom: 2px solid $green-light; }
-  :deep(h3) { font-size: 16px; font-weight: 700; margin: 20px 0 10px; }
-  :deep(p) { margin-bottom: 14px; text-indent: 2em; color: #374151; }
-  :deep(img) { display: block; max-width: 100%; margin: 24px auto; border-radius: $radius-lg; box-shadow: $shadow-lg; }
-  :deep(strong) { color: $text; }
-  :deep(blockquote) { border-left: 3px solid $green; padding: 10px 16px; background: $green-mid; border-radius: 0 $radius-sm $radius-sm 0; margin: 16px 0; p { margin: 0; text-indent: 0; } }
+  :deep(h2) {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 32px 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid $green-light;
+  }
+
+  :deep(h3) {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 20px 0 10px;
+  }
+
+  :deep(p) {
+    margin-bottom: 14px;
+    text-indent: 2em;
+    color: #374151;
+  }
+
+  :deep(img) {
+    display: block;
+    max-width: 100%;
+    margin: 24px auto;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+  }
+
+  :deep(strong) {
+    color: $text;
+  }
+
+  :deep(blockquote) {
+    border-left: 3px solid $green;
+    padding: 10px 16px;
+    background: $green-mid;
+    border-radius: 0 $radius-sm $radius-sm 0;
+    margin: 16px 0;
+
+    p {
+      margin: 0;
+      text-indent: 0;
+    }
+  }
 }
 
-.typing-cursor { display: inline-block; animation: blink 1s infinite; color: $green; font-weight: bold; font-size: 18px; }
+.typing-cursor {
+  display: inline-block;
+  animation: blink 1s infinite;
+  color: $green;
+  font-weight: bold;
+  font-size: 18px;
+}
 
 .image-progress-box {
   background: $bg;
@@ -1248,14 +1698,34 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
     font-size: 14px;
     font-weight: 600;
     color: $text;
-    .progress-count { margin-left: auto; font-size: 13px; color: $green-dark; background: $green-mid; padding: 2px 10px; border-radius: 20px; }
+
+    .progress-count {
+      margin-left: auto;
+      font-size: 13px;
+      color: $green-dark;
+      background: $green-mid;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
   }
 }
 
-.loading-placeholder { text-align: center; padding: 100px 0; p { color: $text-sub; font-size: 15px; margin: 16px 0 0; } }
+.loading-placeholder {
+  text-align: center;
+  padding: 100px 0;
+
+  p {
+    color: $text-sub;
+    font-size: 15px;
+    margin: 16px 0 0;
+  }
+}
 
 // ─── Success Banner ───────────────────────────────────────────────
-.success-banner { margin-bottom: 24px; }
+.success-banner {
+  margin-bottom: 24px;
+}
+
 .success-banner-inner {
   display: inline-flex;
   align-items: center;
@@ -1299,19 +1769,85 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
 }
 
 // Quota Card
-.quota-card { background: linear-gradient(135deg, rgba(34,197,94,.06) 0%, rgba(34,197,94,.02) 100%); border-color: rgba(34,197,94,.2); }
-.quota-admin { display: flex; align-items: center; gap: 10px; }
-.quota-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; &.admin { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #78350f; } }
-.quota-text { font-size: 14px; color: $text-sub; }
-.quota-info { text-align: center; }
-.quota-display { display: flex; align-items: baseline; justify-content: center; gap: 3px; margin-bottom: 2px; }
-.quota-number { font-size: 40px; font-weight: 800; color: $green; line-height: 1; font-variant-numeric: tabular-nums; &.low { color: #f59e0b; } &.empty { color: #ef4444; } }
-.quota-unit { font-size: 14px; color: $text-muted; }
-.quota-label { font-size: 12px; color: $text-muted; margin: 4px 0 12px; }
-.quota-progress { max-width: 100px; margin: 0 auto; }
+.quota-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, .06) 0%, rgba(34, 197, 94, .02) 100%);
+  border-color: rgba(34, 197, 94, .2);
+}
+
+.quota-admin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quota-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+
+  &.admin {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #78350f;
+  }
+}
+
+.quota-text {
+  font-size: 14px;
+  color: $text-sub;
+}
+
+.quota-info {
+  text-align: center;
+}
+
+.quota-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 2px;
+}
+
+.quota-number {
+  font-size: 40px;
+  font-weight: 800;
+  color: $green;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+
+  &.low {
+    color: #f59e0b;
+  }
+
+  &.empty {
+    color: #ef4444;
+  }
+}
+
+.quota-unit {
+  font-size: 14px;
+  color: $text-muted;
+}
+
+.quota-label {
+  font-size: 12px;
+  color: $text-muted;
+  margin: 4px 0 12px;
+}
+
+.quota-progress {
+  max-width: 100px;
+  margin: 0 auto;
+}
 
 // Hot Tags
-.hot-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.hot-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
 .hot-tag {
   display: inline-block;
   padding: 6px 11px;
@@ -1324,15 +1860,62 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   transition: all 0.15s;
   line-height: 1.3;
 
-  &:hover { border-color: $green; color: $green-dark; background: $green-mid; transform: translateY(-1px); }
+  &:hover {
+    border-color: $green;
+    color: $green-dark;
+    background: $green-mid;
+    transform: translateY(-1px);
+  }
 }
 
 // Tips
-.tips-list { display: flex; flex-direction: column; gap: 10px; }
-.tip-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: $white; border-radius: $radius-sm; border: 1px solid $border; transition: box-shadow 0.15s; &:hover { box-shadow: $shadow-sm; } }
-.tip-icon { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, $green, $green-dark); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-.tip-title { font-size: 12px; font-weight: 700; color: $text; margin-bottom: 2px; }
-.tip-desc { font-size: 11px; color: $text-muted; line-height: 1.4; }
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: $white;
+  border-radius: $radius-sm;
+  border: 1px solid $border;
+  transition: box-shadow 0.15s;
+
+  &:hover {
+    box-shadow: $shadow-sm;
+  }
+}
+
+.tip-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $green, $green-dark);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.tip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: $text;
+  margin-bottom: 2px;
+}
+
+.tip-desc {
+  font-size: 11px;
+  color: $text-muted;
+  line-height: 1.4;
+}
 
 // Phase Info Card（阶段状态提示卡）
 .phase-info-card {
@@ -1351,53 +1934,262 @@ $shadow-lg: 0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
   justify-content: center;
   flex-shrink: 0;
 
-  &.generating { background: $green-mid; color: $green-dark; }
-  &.user-action { background: $purple-mid; color: $purple; }
+  &.generating {
+    background: $green-mid;
+    color: $green-dark;
+  }
+
+  &.user-action {
+    background: $purple-mid;
+    color: $purple;
+  }
 }
 
-.phase-info-text { flex: 1; min-width: 0; }
-.phase-info-title { font-size: 13px; font-weight: 700; color: $text; margin-bottom: 3px; }
-.phase-info-sub { font-size: 12px; color: $text-muted; line-height: 1.4; }
+.phase-info-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.phase-info-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: $text;
+  margin-bottom: 3px;
+}
+
+.phase-info-sub {
+  font-size: 12px;
+  color: $text-muted;
+  line-height: 1.4;
+}
 
 // Progress Card
-.progress-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-.progress-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; background: $white; border-radius: $radius-sm; border: 1px solid $border; }
-.p-label { font-size: 12px; color: $text-muted; }
-.p-value { font-size: 12px; font-weight: 700; color: $green-dark; }
-.tip-notice { display: flex; align-items: flex-start; gap: 7px; padding: 10px 12px; background: $green-mid; border-radius: $radius-sm; font-size: 12px; color: $green-dark; line-height: 1.5; }
+.progress-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  background: $white;
+  border-radius: $radius-sm;
+  border: 1px solid $border;
+}
+
+.p-label {
+  font-size: 12px;
+  color: $text-muted;
+}
+
+.p-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: $green-dark;
+}
+
+.tip-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 10px 12px;
+  background: $green-mid;
+  border-radius: $radius-sm;
+  font-size: 12px;
+  color: $green-dark;
+  line-height: 1.5;
+}
 
 // Action Buttons
-.action-list { display: flex; flex-direction: column; gap: 8px; }
-.action-btn {
-  width: 100%; height: 38px; border-radius: $radius-sm; font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 7px; border: none;
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-  &.secondary { background: $white; color: $text; border: 1px solid $border; &:hover { border-color: $green; color: $green-dark; background: $green-mid; } }
-  &.primary { background: linear-gradient(135deg, $green, $green-dark); color: white; box-shadow: 0 3px 10px rgba(34,197,94,.3); &:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(34,197,94,.4); } }
+.action-btn {
+  width: 100%;
+  height: 38px;
+  border-radius: $radius-sm;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: none;
+
+  &.secondary {
+    background: $white;
+    color: $text;
+    border: 1px solid $border;
+
+    &:hover {
+      border-color: $green;
+      color: $green-dark;
+      background: $green-mid;
+    }
+  }
+
+  &.primary {
+    background: linear-gradient(135deg, $green, $green-dark);
+    color: white;
+    box-shadow: 0 3px 10px rgba(34, 197, 94, .3);
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(34, 197, 94, .4);
+    }
+  }
 }
 
 // Stats
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.stat-item { text-align: center; padding: 14px 10px; background: $white; border-radius: $radius-sm; border: 1px solid $border; }
-.stat-value { font-size: 22px; font-weight: 800; color: $green; margin-bottom: 3px; font-variant-numeric: tabular-nums; }
-.stat-label { font-size: 11px; color: $text-muted; font-weight: 500; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 14px 10px;
+  background: $white;
+  border-radius: $radius-sm;
+  border: 1px solid $border;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: $green;
+  margin-bottom: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: $text-muted;
+  font-weight: 500;
+}
 
 // Footer
-.panel-footer { margin-top: auto; padding-top: 14px; border-top: 1px solid $border-light; display: flex; justify-content: center; gap: 20px; }
-.help-link { display: flex; align-items: center; gap: 5px; font-size: 12px; color: $text-muted; cursor: pointer; transition: color 0.15s; &:hover { color: $green; } }
+.panel-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid $border-light;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.help-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: $text-muted;
+  cursor: pointer;
+  transition: color 0.15s;
+
+  &:hover {
+    color: $green;
+  }
+}
 
 // ─── Animations ───────────────────────────────────────────────────
-@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
+}
 
 // ─── Responsive ───────────────────────────────────────────────────
-@media (max-width: 1400px) { .create-layout { grid-template-columns: 240px 1fr 260px; } }
-@media (max-width: 1100px) { .create-layout { grid-template-columns: 220px 1fr 240px; } .main-content { padding: 28px 32px; } }
+@media (max-width: 1400px) {
+  .create-layout {
+    grid-template-columns: 240px 1fr 260px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .create-layout {
+    grid-template-columns: 220px 1fr 240px;
+  }
+  .main-content {
+    padding: 28px 32px;
+  }
+}
+
 @media (max-width: 900px) {
-  .article-create-page { height: auto; min-height: calc(100vh - 64px); overflow: visible; }
-  .create-layout { grid-template-columns: 1fr; height: auto; }
-  .sidebar-left, .sidebar-right { display: none; }
-  .main-content { padding: 20px; border: none; }
+  .article-create-page {
+    height: auto;
+    min-height: calc(100vh - 64px);
+    overflow: visible;
+  }
+  .create-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .sidebar-left, .sidebar-right {
+    display: none;
+  }
+  .main-content {
+    padding: 20px;
+    border: none;
+  }
+}
+
+// 补充样式 - 配图功能禁用
+.method-option.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vip-icon {
+  margin-left: 4px;
+  color: #f59e0b;
+  font-size: 12px;
+}
+
+.vip-notice {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.upgrade-link {
+  color: #ef4444;
+  margin-left: 4px;
 }
 </style>
