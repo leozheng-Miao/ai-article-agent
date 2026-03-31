@@ -58,6 +58,123 @@
           <p class="article-sub-title">{{ article.subTitle }}</p>
         </header>
 
+        <!-- ✅ 执行日志面板（紧跟 header，在封面图之前） -->
+        <div
+            v-if="executionStats && executionStats.logs && executionStats.logs.length > 0"
+            class="execution-logs-section"
+        >
+          <!-- 日志面板头部（可点击折叠/展开） -->
+          <div class="logs-header" @click="showExecutionLogs = !showExecutionLogs">
+            <div class="logs-header-left">
+              <div class="section-icon logs-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h2 class="section-title">执行日志</h2>
+              <span
+                  class="overall-status-badge"
+                  :class="getOverallStatusClass(executionStats.overallStatus ?? '')"
+              >
+                {{ executionStats.overallStatus ?? '' }}
+              </span>
+            </div>
+            <div class="toggle-btn" :class="{ expanded: showExecutionLogs }">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- 可折叠内容 -->
+          <transition name="logs-collapse">
+            <div v-show="showExecutionLogs" class="logs-content">
+
+              <!-- 统计概览卡片 -->
+              <div class="stats-summary">
+                <div class="stat-item">
+                  <span class="stat-label">总耗时</span>
+                  <span class="stat-value">{{ executionStats.totalDurationMs ?? 0 }}ms</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                  <span class="stat-label">智能体数量</span>
+                  <span class="stat-value">{{ executionStats.agentCount ?? 0 }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                  <span class="stat-label">平均耗时</span>
+                  <span class="stat-value">
+                    {{
+                      executionStats.agentCount && executionStats.totalDurationMs
+                          ? Math.round(executionStats.totalDurationMs / executionStats.agentCount)
+                          : 0
+                    }}ms
+                  </span>
+                </div>
+              </div>
+
+              <!-- 智能体时间线 -->
+              <div class="agent-timeline">
+                <div
+                    v-for="(log, index) in executionStats.logs"
+                    :key="log.id ?? index"
+                    class="timeline-item"
+                    :class="log.status?.toLowerCase()"
+                >
+                  <!-- 连接线 + 状态圆点 -->
+                  <div class="timeline-track">
+                    <div class="timeline-dot" :class="log.status?.toLowerCase()">
+                      <!-- SUCCESS -->
+                      <svg v-if="log.status === 'SUCCESS'" width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <!-- FAILED -->
+                      <svg v-else-if="log.status === 'FAILED'" width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                      </svg>
+                      <!-- RUNNING / 其他 -->
+                      <svg v-else width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                      </svg>
+                    </div>
+                    <!-- 不是最后一项才显示连接线 -->
+                    <div
+                        v-if="index < executionStats.logs.length - 1"
+                        class="timeline-line"
+                    ></div>
+                  </div>
+
+                  <!-- 内容区 -->
+                  <div class="timeline-content">
+                    <div class="timeline-row">
+                      <span class="agent-name">{{ getAgentDisplayName(log.agentName ?? '') }}</span>
+                      <span class="duration-badge" :class="getDurationClass(log.durationMs ?? 0)">
+                        {{ log.durationMs ?? 0 }}ms
+                      </span>
+                    </div>
+                    <div class="timeline-time">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                      {{ log.startTime ? formatDate(log.startTime) : '' }}
+                    </div>
+                    <div v-if="log.errorMessage" class="error-message">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                      {{ log.errorMessage }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
+
         <!-- 封面图 -->
         <div v-if="coverImage" class="article-cover-wrap" @click="openImagePreview(coverImage)">
           <img :src="coverImage" :alt="article.mainTitle" class="article-cover-img" loading="lazy" />
@@ -110,7 +227,7 @@
 
         <div class="article-divider light"></div>
 
-        <!-- ✅ 核心修复：优先使用 fullContent（已包含图片），fallback 到 content -->
+        <!-- 文章正文 -->
         <section class="content-section">
           <div class="section-header no-toggle">
             <div class="section-title-row">
@@ -122,19 +239,13 @@
             </div>
           </div>
 
-          <!--
-            关键修复说明：
-            fullContent = 后端 mergeImagesIntoContent() 生成的，已将图片以 ![desc](url) 形式嵌入正文
-            content     = 仅文字，图片占位符未替换
-            应优先使用 fullContent，图片会在正文对应位置渲染
-          -->
           <div
               v-html="markdownToHtml(article.fullContent || article.content || '')"
               class="markdown-body"
           ></div>
         </section>
 
-        <!-- 配图索引（附加展示，仅在有图时显示，作为补充索引） -->
+        <!-- 配图索引 -->
         <template v-if="article.images && article.images.length > 0">
           <div class="article-divider light"></div>
           <section class="images-section">
@@ -204,6 +315,7 @@ import { ArrowLeftOutlined, DownloadOutlined, CopyOutlined, CheckOutlined } from
 import { getArticle, type ArticleVO } from '@/api/articleController'
 import { marked } from 'marked'
 import dayjs from 'dayjs'
+import { getExecutionLogs } from '@/api/agentLogController.ts'
 
 const router = useRouter()
 const route = useRoute()
@@ -214,13 +326,63 @@ const outlineExpanded = ref(true)
 const isCopied = ref(false)
 const previewUrl = ref('')
 
-// 字数统计（基于 fullContent 或 content）
+// ─── 执行日志相关 ─────────────────────────────────────────────────
+const executionStats = ref<API.AgentExecutionStats | null>(null)
+const logsLoading = ref(false)
+const showExecutionLogs = ref(false) // 默认收起
+
+// 加载执行日志
+const loadExecutionLogs = async (taskId: string) => {
+  logsLoading.value = true
+  try {
+    const res = await getExecutionLogs({ taskId })
+    executionStats.value = res.data.data || null
+  } catch (error) {
+    console.error('加载执行日志失败:', error)
+  } finally {
+    logsLoading.value = false
+  }
+}
+
+// 获取智能体显示名称
+const getAgentDisplayName = (agentName: string) => {
+  const nameMap: Record<string, string> = {
+    'agent1_generate_titles': '生成标题',
+    'agent2_generate_outline': '生成大纲',
+    'agent3_generate_content': '生成正文',
+    'agent4_analyze_image_requirements': '分析配图需求',
+    'agent5_generate_images': '生成配图',
+    'agent6_merge_content': '图文合成',
+    'ai_modify_outline': 'AI修改大纲'
+  }
+  return nameMap[agentName] || agentName
+}
+
+// 整体状态对应的 class
+const getOverallStatusClass = (status: string) => {
+  const map: Record<string, string> = {
+    SUCCESS: 'badge-success',
+    FAILED: 'badge-failed',
+    PROCESSING: 'badge-processing',
+    PENDING: 'badge-pending',
+  }
+  return map[status.toUpperCase()] || 'badge-default'
+}
+
+// 根据耗时长短给 duration 着色（快 < 5s / 中 < 20s / 慢 ≥ 20s）
+const getDurationClass = (ms: number) => {
+  if (ms < 5000) return 'dur-fast'
+  if (ms < 20000) return 'dur-mid'
+  return 'dur-slow'
+}
+
+// ─── 字数统计 ──────────────────────────────────────────────────────
 const wordCount = computed(() => {
   const text = article.value?.fullContent || article.value?.content || ''
   return text.replace(/!\[.*?\]\(.*?\)/g, '').replace(/[#*>`\-_\[\]]/g, '').trim().length
 })
 
-// 封面图：取 position === 1 或 type === 'cover' 的图片
+// ─── 封面图 ────────────────────────────────────────────────────────
 const coverImage = computed<string | null>(() => {
   if (!article.value?.images?.length) return null
   const cover = article.value.images.find((img: any) => img.position === 1 || img.type === 'cover')
@@ -233,14 +395,15 @@ const markdownToHtml = (markdown: string) => {
   return marked(markdown) as string
 }
 
-// 加载文章
+// 加载文章（含日志）
 const loadArticle = async () => {
   const taskId = route.params.taskId as string
   if (!taskId) { message.error('文章ID不存在'); return }
   loading.value = true
   try {
     const res = await getArticle({ taskId })
-    article.value = res.data.data
+    article.value = res.data.data || null
+    await loadExecutionLogs(taskId)
   } catch (error: any) {
     message.error(error.message || '加载失败')
   } finally {
@@ -289,9 +452,8 @@ const openImagePreview = (url: string) => { previewUrl.value = url }
 // 工具函数
 const formatDate = (date: string) => dayjs(date).format('YYYY-MM-DD HH:mm')
 
-const getStatusText = (status: string) => {
-  return ({ PENDING: '等待中', PROCESSING: '生成中', COMPLETED: '已完成', FAILED: '失败' })[status] || status
-}
+const getStatusText = (status: string) =>
+    ({ PENDING: '等待中', PROCESSING: '生成中', COMPLETED: '已完成', FAILED: '失败' })[status] || status
 
 const getMethodClass = (method: string) => {
   const map: Record<string, string> = {
@@ -505,7 +667,276 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
   line-height: 1.6;
 }
 
-// ─── Article Cover ───────────────────────────────────────────────
+// ─── Execution Logs Section ───────────────────────────────────────
+.execution-logs-section {
+  margin: 0 48px 0;
+  border: 1px solid $border;
+  border-radius: 14px;
+  overflow: hidden;
+  background: $bg;
+  margin-bottom: 28px;
+}
+
+.logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: $white;
+  transition: background 0.15s;
+
+  &:hover {
+    background: $green-mid;
+
+    .toggle-btn {
+      border-color: $green;
+      color: $green-dark;
+      background: $green-light;
+    }
+  }
+}
+
+.logs-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+// logs icon — amber tone to differentiate from other sections
+.section-icon.logs-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+}
+
+// overall status badge inside header
+.overall-status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+
+  &.badge-success { background: $green-light; color: $green-dark; }
+  &.badge-failed { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+  &.badge-processing { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }
+  &.badge-pending { background: $border-light; color: $text-muted; }
+  &.badge-default { background: $border-light; color: $text-muted; }
+}
+
+// ─── Logs Collapse Transition ──────────────────────────────────────
+.logs-collapse-enter-active,
+.logs-collapse-leave-active {
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+.logs-collapse-enter-from,
+.logs-collapse-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+.logs-collapse-enter-to,
+.logs-collapse-leave-from {
+  opacity: 1;
+  max-height: 1200px;
+}
+
+// ─── Logs Content ─────────────────────────────────────────────────
+.logs-content {
+  border-top: 1px solid $border;
+  padding: 20px 20px 24px;
+}
+
+// ─── Stats Summary ────────────────────────────────────────────────
+.stats-summary {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: $white;
+  border: 1px solid $border;
+  border-radius: 10px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: $text;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: $border;
+  flex-shrink: 0;
+  margin: 0 8px;
+}
+
+// ─── Agent Timeline ───────────────────────────────────────────────
+.agent-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 14px;
+  position: relative;
+}
+
+// ── Track (dot + line) ──
+.timeline-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.timeline-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: transform 0.15s;
+  box-shadow: $shadow-sm;
+
+  &.success {
+    background: $green-light;
+    color: $green-dark;
+    border: 2px solid rgba(34, 197, 94, 0.3);
+  }
+
+  &.failed {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border: 2px solid rgba(239, 68, 68, 0.25);
+  }
+
+  &.running, &.processing {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+    border: 2px solid rgba(59, 130, 246, 0.25);
+    animation: pulse-dot 1.6s ease-in-out infinite;
+  }
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  min-height: 16px;
+  background: linear-gradient(180deg, $border 0%, $border-light 100%);
+  margin: 4px 0;
+  border-radius: 1px;
+}
+
+// ── Content ──
+.timeline-content {
+  flex: 1;
+  padding-bottom: 20px;
+  padding-top: 4px;
+}
+
+// last item — no bottom padding needed
+.timeline-item:last-child .timeline-content {
+  padding-bottom: 0;
+}
+
+.timeline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.agent-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: $text;
+}
+
+.duration-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  flex-shrink: 0;
+
+  &.dur-fast {
+    background: $green-light;
+    color: $green-dark;
+  }
+
+  &.dur-mid {
+    background: rgba(245, 158, 11, 0.12);
+    color: #92400e;
+  }
+
+  &.dur-slow {
+    background: rgba(239, 68, 68, 0.08);
+    color: #b91c1c;
+  }
+}
+
+.timeline-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: $text-muted;
+  line-height: 1.4;
+}
+
+.error-message {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #dc2626;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 6px;
+  padding: 5px 10px;
+  line-height: 1.5;
+}
+
+// ─── Article Cover ────────────────────────────────────────────────
 .article-cover-wrap {
   position: relative;
   margin: 0;
@@ -679,7 +1110,7 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
   }
 }
 
-// ─── Collapse Transition ──────────────────────────────────────────
+// ─── Collapse Transitions ─────────────────────────────────────────
 .outline-collapse-enter-active,
 .outline-collapse-leave-active {
   transition: all 0.25s ease;
@@ -703,7 +1134,6 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
 }
 
 // ─── Markdown Body ────────────────────────────────────────────────
-// 关键：图片在正文中正确渲染
 .markdown-body {
   font-size: 16px;
   line-height: 1.9;
@@ -715,7 +1145,7 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
     margin: 36px 0 16px;
     color: $text;
     letter-spacing: -0.4px;
-    display: none; // 已在 header 区域展示，避免重复
+    display: none;
   }
 
   :deep(h2) {
@@ -753,12 +1183,11 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
     color: #374151;
 
     &:has(img) {
-      text-indent: 0; // 图片段落不缩进
+      text-indent: 0;
       margin: 28px 0;
     }
   }
 
-  // ✅ 图片渲染（fullContent 中的 markdown 图片语法会在此处正确展示）
   :deep(img) {
     display: block;
     max-width: 100%;
@@ -1012,6 +1441,11 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
   100% { background-position: 0% 50%; }
 }
 
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.88); }
+}
+
 // ─── Responsive ───────────────────────────────────────────────────
 @media (max-width: 768px) {
   .article-detail-page { padding: 16px 12px 48px; }
@@ -1035,5 +1469,11 @@ $shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
   .images-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 
   .top-bar { flex-wrap: wrap; gap: 10px; }
+
+  .execution-logs-section { margin: 0 12px 20px; }
+
+  .stats-summary { padding: 12px 16px; gap: 0; }
+
+  .stat-value { font-size: 18px; }
 }
 </style>

@@ -103,7 +103,7 @@ import {
   HomeOutlined,
   EditOutlined,
   UnorderedListOutlined,
-  CrownOutlined,
+  CrownOutlined, BarChartOutlined,
 } from '@ant-design/icons-vue'
 import { useTheme } from '@/composables/useTheme'
 import { USER_ROLE_ADMIN, USER_ROLE_VIP } from '@/constants/user.ts'
@@ -126,6 +126,7 @@ const allMenuItems = [
   { key: '/create', label: '创作文章', icon: EditOutlined },
   { key: '/article/list', label: '我的文章', icon: UnorderedListOutlined },
   { key: '/admin/userManage', label: '用户管理', icon: UnorderedListOutlined, adminOnly: true },
+  { key: '/admin/statistics', icon: BarChartOutlined, label: '数据', adminOnly: true, },
 ]
 
 const visibleMenuItems = computed(() =>

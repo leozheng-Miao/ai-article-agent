@@ -5,10 +5,14 @@
 import * as userController from "./userController";
 import * as paymentController from "./paymentController";
 import * as articleController from "./articleController";
+import * as statisticsController from "./statisticsController";
 import * as healthController from "./healthController";
+import * as agentLogController from "./agentLogController";
 export default {
   userController,
   paymentController,
   articleController,
+  statisticsController,
   healthController,
+  agentLogController,
 };
