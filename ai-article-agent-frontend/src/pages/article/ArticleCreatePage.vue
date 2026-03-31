@@ -687,7 +687,7 @@ const toggleMethod = (value: string) => {
 
 const handleMethodClick = (method: any) => {
   // 非 VIP 禁止使用 VIP 功能
-  if (method.vipOnly && !isVip.value) {
+  if (method.vipOnly && !isVip.value && !isAdmin.value) {
     message.warning('该功能仅限 VIP 会员')
     return
   }

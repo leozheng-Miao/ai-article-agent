@@ -115,23 +115,30 @@
         </div>
 
         <div class="flow-phases">
-          <div v-for="(phase, i) in phases" :key="i" class="phase-card">
-            <div class="phase-num">{{ i + 1 }}</div>
-            <div class="phase-icon">{{ phase.emoji }}</div>
-            <h3 class="phase-title">{{ phase.title }}</h3>
-            <p class="phase-desc">{{ phase.desc }}</p>
-            <div class="phase-steps">
-              <div v-for="(step, j) in phase.steps" :key="j" class="phase-step">
-                <span class="step-dot" :class="step.type"></span>
-                <span>{{ step.text }}</span>
+          <template v-for="(phase, i) in phases" :key="i">
+            <div class="phase-card">
+              <div class="phase-num">{{ i + 1 }}</div>
+              <div class="phase-icon">{{ phase.emoji }}</div>
+              <h3 class="phase-title">{{ phase.title }}</h3>
+              <p class="phase-desc">{{ phase.desc }}</p>
+              <div class="phase-steps">
+                <div v-for="(step, j) in phase.steps" :key="j" class="phase-step">
+                  <span class="step-dot" :class="step.type"></span>
+                  <span>{{ step.text }}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="phase-arrow" v-for="i in 2" :key="`arrow-${i}`" :style="{ gridColumn: i * 2 }">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12h14M12 5l7 7-7 7" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+            <div v-if="i < phases.length - 1" class="phase-arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+<!--            <div class="phase-arrow" v-for="i in 2" :key="`arrow-${i}`" :style="{ gridColumn: i * 2 }">-->
+<!--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">-->
+<!--                <path d="M5 12h14M12 5l7 7-7 7" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--              </svg>-->
+<!--            </div>-->
+          </template>
         </div>
       </div>
     </section>
@@ -514,23 +521,47 @@ $shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
 }
 
 .flow-phases {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
-  gap: 0;
-  align-items: center;
+  //display: flex;
+  //grid-template-columns: 1fr auto 1fr auto 1fr;
+  //gap: 0;
+  //align-items: center;
+  display: flex;
+  align-items: stretch; // 让所有卡片高度一致
+  justify-content: center;
+  gap: 20px; // 卡片与箭头之间的间距
+  flex-wrap: nowrap; // 电脑端不换行
 }
 
+//.phase-card {
+//  background: $bg;
+//  border: 1.5px solid $border;
+//  border-radius: $radius-xl;
+//  padding: 28px 24px;
+//  transition: all 0.2s;
+//
+//  &:hover {
+//    border-color: rgba(34,197,94,.3);
+//    box-shadow: $shadow-md;
+//    transform: translateY(-3px);
+//  }
+//}
+
 .phase-card {
+  flex: 1; // 均分空间
+  min-width: 280px; // 保证卡片不会被挤得太窄
   background: $bg;
   border: 1.5px solid $border;
   border-radius: $radius-xl;
-  padding: 28px 24px;
-  transition: all 0.2s;
+  padding: 32px 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
 
   &:hover {
-    border-color: rgba(34,197,94,.3);
-    box-shadow: $shadow-md;
-    transform: translateY(-3px);
+    border-color: rgba(34, 197, 94, 0.4);
+    background: $white; // 悬浮时变白，突出对比
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    transform: translateY(-8px);
   }
 }
 
@@ -572,7 +603,36 @@ $shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 16px;
+  flex-shrink: 0;
+  color: $green;
+
+  // 加上一点微动的动画，更有引导感
+  svg {
+    animation: arrow-float 2s infinite ease-in-out;
+  }
+}
+
+@keyframes arrow-float {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+// 响应式处理：平板及手机端变垂直排列
+@media (max-width: 1024px) {
+  .flow-phases {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .phase-card {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .phase-arrow {
+    transform: rotate(90deg); // 垂直排列时箭头向下
+    padding: 10px 0;
+  }
 }
 
 // ─── CTA ─────────────────────────────────────────────────────────
