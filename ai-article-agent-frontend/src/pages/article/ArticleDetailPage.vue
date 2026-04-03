@@ -348,7 +348,7 @@ const loadExecutionLogs = async (taskId: string) => {
 const getAgentDisplayName = (agentName: string) => {
   const nameMap: Record<string, string> = {
     'agent1_generate_titles': '生成标题',
-    'agent2_generate_outline': '生成大纲',
+    'agent2_generate_outlines': '生成大纲',
     'agent3_generate_content': '生成正文',
     'agent4_analyze_image_requirements': '分析配图需求',
     'agent5_generate_images': '生成配图',
